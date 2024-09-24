@@ -22,7 +22,7 @@ class DBSCAN {
     epsilon: number,
     minPoints: number
   ) {
-    console.log("<= DBSCAN constructor =>")
+    console.log("<= DBSCAN constructor =>");
     this.shipperOrders = shipperOrders;
     this.epsilon = epsilon;
     this.minPoints = minPoints;
@@ -35,10 +35,8 @@ class DBSCAN {
   public run(): { clusters: ShipperOrder[][]; noise: ShipperOrder[] } {
     for (const order of this.shipperOrders) {
       if (this.visited.has(order.id)) continue;
-
       this.visited.add(order.id);
       const neighbors = this.getNeighbors(order);
-
       if (neighbors.length < this.minPoints) {
         this.noise.push(order);
       } else {
@@ -47,7 +45,6 @@ class DBSCAN {
         this.clusters.push(cluster);
       }
     }
-
     return { clusters: this.clusters, noise: this.noise };
   }
 
@@ -58,7 +55,6 @@ class DBSCAN {
   ): void {
     cluster.push(order);
     this.clustered.add(order.id);
-
     for (let i = 0; i < neighbors.length; i++) {
       const neighbor = neighbors[i];
       if (!this.visited.has(neighbor.id)) {
@@ -68,7 +64,6 @@ class DBSCAN {
           neighbors.push(...newNeighbors);
         }
       }
-
       if (!this.clustered.has(neighbor.id)) {
         cluster.push(neighbor);
         this.clustered.add(neighbor.id);
